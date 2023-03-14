@@ -5,6 +5,9 @@ const bodyParser = require("body-parser");
 const app = express();
 app.set("view engine", "ejs");
 
+app.use(bodyParser.urlencoded({extended: true}));
+
+var items = ["Buy Food", "Cook Food", "Eat Food"];
 
 app.get("/", function(req, res){
     // res.send("<h1>Everything is Running</h1>");
@@ -18,9 +21,16 @@ app.get("/", function(req, res){
 
     var day = today.toLocaleDateString("en-US", options);
 
-    res.render("list", {
-        kindOfDay: day
-    })
+    res.render("list", {kindOfDay: day, addedItems: items});
+
+});
+
+app.post("/", function(req, res){
+    var item = req.body.toDo;
+    items.push(item);
+
+    res.redirect("/");
+
 });
 
 

@@ -9,12 +9,17 @@
 </head>
 
 <body>
-    <% if(kindOfDay==="Saturday" || kindOfDay==="Sunday" ){ %>
-        <h1 style="color: green">It's a <%= kindOfDay %> !</h1>
-        <% } else{ %>
-            <h1 style="color: blue">It's a <%= kindOfDay %> !</h1>
-            <% } %>
-                <!-- <p>Don't get lazy and get back to work</p> -->
+    <h1> <%= kindOfDay %> </h1>
+    <ul>
+        <% for(var i = 0; i<addedItems.length; i++){ %>
+            <li> <%= addedItems[i] %> </li>
+        <% } %>
+    </ul>
+    <form action="/" method="post">
+        <label>Enter the ToDo:</label>
+        <input type="text" name="toDo">
+        <button type="submit" name="button">Add</button>
+    </form>
 </body>
 
 </html>

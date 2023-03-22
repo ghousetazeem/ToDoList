@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 let items = ["Buy Food", "Cook Food", "Eat Food"];
+let workItems = [];
 
 app.get("/", function(req, res){
     // res.send("<h1>Everything is Running</h1>");
@@ -22,19 +23,37 @@ app.get("/", function(req, res){
 
     let day = today.toLocaleDateString("en-US", options);
 
-    res.render("list", {kindOfDay: day, addedItems: items});
+    res.render("list", {listTitle: day, addedItems: items});
 
 });
 
 app.post("/", function(req, res){
+
     let item = req.body.toDo;
-    items.push(item);
+    if(req.body.list === "Work"){
+        workItems.push(item);
+        res.redirect("/work");
+    }
+    else{
+        items.push(item);
+        res.redirect("/");
+    }
 
-    res.redirect("/");
+});
 
+
+app.get("/work", function(req, res){
+    res.render("list", {listTitle: "Work List", addedItems: workItems});
+});
+
+app.post("/work", function(req, res){
+    let item = req.body.toDo;
+    workItems.push(item);
+    res.redirect("/work");
 });
 
 
 app.listen(3000, function(){
     console.log("Server is running Successfully");
 });
+
